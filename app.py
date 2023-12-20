@@ -1,6 +1,9 @@
 # app.py
+import os
+
 from flask import Flask
 from routes import register_blueprints
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 app = Flask(__name__)
 # Register blueprints
