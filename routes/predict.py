@@ -114,26 +114,16 @@ def predict():
             plt.title('Predicted Values Over Time for Each Feature')
 
             # Save the plot as an image
+            first_blob_name = f"{USER_ID}_predicted_values_plot.png"
             image_path = os.path.join(image_folder, 'predicted_values_plot.png')
             plt.savefig(image_path)
             plt.close()
-
-            # Upload the image to Google Cloud Storage
+            # Upload both images to Google Cloud Storage
             bucket_name = "sehatin-users-images"
-            blob_name = f"{USER_ID}_lstm.png"
-
-            storage_client = storage.Client()
-            bucket = storage_client.bucket(bucket_name)
-            blob = bucket.blob(blob_name)
-            blob.upload_from_filename(image_path)
-            # Delete the local file after upload
-            if os.path.exists(image_path):
-                os.remove(image_path)
-            # Get the public URL of the uploaded image
-            image_url = f"https://storage.googleapis.com/{bucket_name}/{blob_name}"
+            first_blob = upload_to_storage(image_path, bucket_name, first_blob_name)
 
             # Return the image URL in the JSON response
-            return jsonify({"predicted_values_plot_url": image_url})
+            return jsonify({"predicted_values_plot_url": first_blob.public_url})
         except Exception as e:
             print(f"Error: {str(e)}")
             return jsonify({"error": "An error occurred"}), 500
