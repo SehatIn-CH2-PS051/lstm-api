@@ -114,13 +114,13 @@ def predict():
             plt.title('Predicted Values Over Time for Each Feature')
 
             # Save the plot as an image
-            first_blob_name = f"{USER_ID}_predicted_values_plot.png"
-            image_path = os.path.join(image_folder, 'predicted_values_plot.png')
-            plt.savefig(image_path)
+            first_plot_path = os.path.join(image_folder, 'predicted.png')
+            plt.savefig(first_plot_path)
             plt.close()
             # Upload both images to Google Cloud Storage
             bucket_name = "sehatin-users-images"
-            first_blob = upload_to_storage(image_path, bucket_name, first_blob_name)
+            first_blob_name = f"{USER_ID}_predicted.png"
+            first_blob = upload_to_storage(first_plot_path, bucket_name, first_blob_name)
 
             # Return the image URL in the JSON response
             return jsonify({"predicted_values_plot_url": first_blob.public_url})
