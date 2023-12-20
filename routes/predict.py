@@ -8,7 +8,10 @@ import tensorflow as tf
 import pandas as pd
 from google.cloud import storage
 import matplotlib.pyplot as plt
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
 predict_bp = Blueprint("predict", __name__)
 
 
@@ -16,10 +19,10 @@ predict_bp = Blueprint("predict", __name__)
 def predict():
     # Define the database connection parameters
     db_config = {
-        'host': '34.128.108.220',
-        'user': 'root',
-        'password': 'sehatin-db-password',
-        'database': 'sehatin'
+        'host': os.getenv('DB_HOST'),
+        'user': os.getenv('DB_USER'),
+        'password': os.getenv('DB_PASSWORD'),
+        'database': os.getenv('DB_DATABASE')
     }
 
     # Establish a connection to the database
@@ -146,10 +149,10 @@ def predict():
 def predictpm():
     # Define the database connection parameters
     db_config = {
-        'host': '34.128.108.220',
-        'user': 'root',
-        'password': 'sehatin-db-password',
-        'database': 'sehatin'
+        'host': os.getenv('DB_HOST'),
+        'user': os.getenv('DB_USER'),
+        'password': os.getenv('DB_PASSWORD'),
+        'database': os.getenv('DB_DATABASE')
     }
 
     # Establish a connection to the database
